@@ -15,10 +15,6 @@ struct CalculatorBrain {
     // made this be an optional, it's initialized to nil automatically
     private var accumulator: Double?
     
-    private var description = " " // 6. returns a description of the sequence of operands and operations that led to the value returned by result
-    
-    private var resultIsPending = false // 5. returns whether there is a binary operation pending
-    
     // associated values are something not specific to optionals, it's for all enums in Swift
     private enum Operation {
         case constant(Double)
@@ -55,13 +51,16 @@ struct CalculatorBrain {
             switch operation {
             case .constant(let /* associatedConstant */ value):
                 accumulator = value
+                description.append(symbol) // 6.
                 break
             case .unaryOperation(let function):
                 if accumulator != nil { // checking to see if accumulator is in the not set state
                     accumulator = function(accumulator!)
+                    description.append(symbol) // 6.
                 }
             case .binaryOperation(let function):
                 if accumulator != nil {
+                    description.append(symbol) // 6.
                     if resultIsPending { // 5.
                         performPendingBinaryOperation()
                     } else {
@@ -105,7 +104,8 @@ struct CalculatorBrain {
     // public API ---
     
     mutating func setOperand(_ operand: Double) {
-        accumulator = operand // cannot assign to this property, because self is immutable
+        accumulator = operand // cannot assign to this property, because self is immutable => mutating
+        description.append(String(accumulator!)) // 6.
     }
     
     var result: Double? { // read-only computed property
@@ -113,5 +113,11 @@ struct CalculatorBrain {
             return accumulator
         }
     }
+    
+    var resultIsPending = false // 5. returns whether there is a binary operation pending
+    
+    // 6. returns a description of the sequence of operands and operations that led to the value returned by result(or the result so far if resultIsPending).
+    //  The character = (the equals sign) should never appear in this description, nor should ... (ellipses).
+    var description = ""
 }
 
