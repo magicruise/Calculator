@@ -337,7 +337,7 @@
                     </view>
                     <connections>
                         <outlet property="display" destination="O5r-JK-DYO" id="oBd-AW-etH"/>
-                        <outlet property="displayDescription" destination="YoC-Qj-sIq" id="3Bk-i0-t5d"/>
+                        <outlet property="displayDescription" destination="YoC-Qj-sIq" id="lzA-CE-ZrZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSx-Jg-hlm" sceneMemberID="firstResponder"/>
