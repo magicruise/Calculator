@@ -119,5 +119,12 @@ struct CalculatorBrain {
     // 6. returns a description of the sequence of operands and operations that led to the value returned by result(or the result so far if resultIsPending).
     //  The character = (the equals sign) should never appear in this description, nor should ... (ellipses).
     var description = ""
+    
+    // 8.
+    mutating func clear() {
+        accumulator = nil
+        description = ""
+        pendingBinaryOperation = nil
+    }
 }
 
