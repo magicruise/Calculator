@@ -125,6 +125,7 @@ struct CalculatorBrain {
         accumulator = nil
         description = ""
         pendingBinaryOperation = nil
+        resultIsPending = false
     }
 }
 
