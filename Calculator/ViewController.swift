@@ -42,12 +42,29 @@ class ViewController: UIViewController {
     
     @IBAction func performOperation(_ sender: UIButton) {
         if userIsInTheMiddleOfTyping {
+            // 7.
+            // If the userIsInTheMiddleOfTyping, you can leave the UILabel showing whatever was there 
+            // before the user started typing the number.
+            if !brain.resultIsPending {
+                brain.clear()
+                displayDescription.text = " "
+            }
+            
             brain.setOperand(displayValue)
             userIsInTheMiddleOfTyping = false
         }
         if let mathematicalSymbol = sender.currentTitle {
             brain.performOperation(mathematicalSymbol)
         }
+        
+        // 7.
+        // If resultIsPending is true, put . . . on the end of the UILabel, else put =.
+        if brain.resultIsPending {
+            displayDescription.text = brain.description + "..."
+        } else {
+            displayDescription.text = brain.description + "="
+        }
+        
         if let result = brain.result {
             displayValue = result
         }
