@@ -288,7 +288,7 @@
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="performOperation:" destination="DMs-o9-8Q3" eventType="touchUpInside" id="Yhc-oi-OyA"/>
+                                                                    <action selector="clear" destination="DMs-o9-8Q3" eventType="touchUpInside" id="6Ww-tQ-Tuf"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KyA-7v-xcF">
