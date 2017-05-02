@@ -15,6 +15,9 @@ struct CalculatorBrain {
     // made this be an optional, it's initialized to nil automatically
     private var accumulator: Double?
     
+    // 7.
+    private var descriptionArray = [String]()
+    
     // associated values are something not specific to optionals, it's for all enums in Swift
     private enum Operation {
         case constant(Double)
@@ -72,17 +75,24 @@ struct CalculatorBrain {
         if let operation = operations[symbol] {
             switch operation {
             case .constant(let /* associatedConstant */ value):
+                descriptionArray.append(symbol) // 7.
                 accumulator = value
-                description.append(symbol) // 6.
                 break
             case .unaryOperation(let function):
                 if accumulator != nil { // checking to see if accumulator is in the not set state
+                    // 7.
+                    if resultIsPending {
+                        descriptionArray.append(symbol + "(" + descriptionArray.removeLast() + ")")
+                    } else {
+                        descriptionArray.insert(symbol + "(", at: 0)
+                        descriptionArray.append(")")
+                    }
+                    
                     accumulator = function(accumulator!)
-                    description.append(symbol) // 6.
                 }
             case .binaryOperation(let function):
                 if accumulator != nil {
-                    description.append(symbol) // 6.
+                    descriptionArray.append(symbol) // 7.
                     if resultIsPending { // 5.
                         performPendingBinaryOperation()
                     } else {
@@ -101,7 +111,7 @@ struct CalculatorBrain {
     
     mutating func setOperand(_ operand: Double) {
         accumulator = operand // cannot assign to this property, because self is immutable => mutating
-        description.append(String(accumulator!)) // 6.
+        descriptionArray.append(String(accumulator!)) // 7.
     }
     
     var result: Double? { // read-only computed property
@@ -114,12 +124,25 @@ struct CalculatorBrain {
     
     // 6. returns a description of the sequence of operands and operations that led to the value returned by result(or the result so far if resultIsPending).
     //  The character = (the equals sign) should never appear in this description, nor should ... (ellipses).
-    var description = ""
+    // 7.
+    var description: String {
+        get {
+            if descriptionArray.count != 0 {
+                var descriptionString = ""
+                for arrayString in descriptionArray {
+                    descriptionString += arrayString
+                }
+                return descriptionString
+            } else {
+                return " "
+            }
+        }
+    }
     
     // 8.
     mutating func clear() {
         accumulator = nil
-        description = ""
+        descriptionArray = [] // 7. Does it make a memory problem?
         pendingBinaryOperation = nil
         resultIsPending = false
     }

@@ -47,7 +47,6 @@ class ViewController: UIViewController {
             // before the user started typing the number.
             if !brain.resultIsPending {
                 brain.clear()
-                displayDescription.text = " "
             }
             
             brain.setOperand(displayValue)
